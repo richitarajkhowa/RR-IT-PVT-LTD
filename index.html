@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RR IT Pvt. Ltd. | enterprise • cloud • security</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    /* LIGHT THEME (default) */
+    :root {
+      --bg-primary: #f5f9ff;
+      --bg-secondary: #ecf2fc;
+      --bg-card: rgba(255, 255, 255, 0.75);
+      --bg-card-hover: rgba(255, 255, 255, 0.9);
+      --text-primary: #0a2540;
+      --text-secondary: #2d4b6e;
+      --text-muted: #3e5670;
+      --heading-gradient: linear-gradient(135deg, #0a1f3b, #1c4b8c);
+      --accent: #1e5fd9;
+      --accent-light: rgba(30,95,217,0.12);
+      --border-light: rgba(30,95,217,0.2);
+      --navbar-bg: rgba(255, 255, 255, 0.75);
+      --footer-bg: #0a1a2e;
+      --footer-text: #c0d2f0;
+      --shadow-color: rgba(0,35,75,0.15);
+      --particle-bg: radial-gradient(circle at 20% 30%, rgba(30,95,217,0.02) 0%, transparent 40%);
+      --cat-item-bg: rgba(19,41,75,0.9);
+    }
+
+    /* DARK THEME */
+    [data-theme="dark"] {
+      --bg-primary: #0a1424;
+      --bg-secondary: #111c30;
+      --bg-card: rgba(20, 35, 60, 0.85);
+      --bg-card-hover: rgba(30, 50, 80, 0.95);
+      --text-primary: #e3edff;
+      --text-secondary: #b0c8f0;
+      --text-muted: #9bb1d0;
+      --heading-gradient: linear-gradient(135deg, #9bbaff, #4d8cff);
+      --accent: #3d7aff;
+      --accent-light: rgba(61, 122, 255, 0.2);
+      --border-light: rgba(61, 122, 255, 0.3);
+      --navbar-bg: rgba(10, 20, 40, 0.85);
+      --footer-bg: #050b16;
+      --footer-text: #a0b5d9;
+      --shadow-color: rgba(0, 0, 0, 0.4);
+      --particle-bg: radial-gradient(circle at 20% 30%, rgba(61, 122, 255, 0.05) 0%, transparent 40%);
+      --cat-item-bg: rgba(20, 45, 90, 0.9);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* particle background */
+    #particles-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: var(--particle-bg);
+    }
+
+    /* header / nav with glassmorphism */
+    .navbar {
+      background: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 28px -6px var(--shadow-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 0.2rem;
+    }
+    .logo h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--heading-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--accent);
+      background: none;
+      -webkit-text-fill-color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2.5px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* dark mode toggle */
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 40px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: var(--accent);
+      transition: 0.2s;
+      margin-left: 0.5rem;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-outline {
+      border: 1.8px solid var(--accent);
+      border-radius: 40px;
+      padding: 0.5rem 1.6rem !important;
+      background: transparent;
+      font-weight: 600;
+      transition: all 0.25s !important;
+    }
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white !important;
+    }
+    .btn-outline::after {
+      display: none !important;
+    }
+
+    /* hero */
+    .hero {
+      padding: 4rem 0 6rem;
+      position: relative;
+    }
+    .hero-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4rem;
+    }
+    .hero-text {
+      flex: 1 1 380px;
+    }
+    .hero-text .badge {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 600;
+      padding: 0.3rem 1.2rem;
+      border-radius: 30px;
+      display: inline-block;
+      margin-bottom: 1.8rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--border-light);
+    }
+    .hero-text h2 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      background: var(--heading-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero-text p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin: 1.5rem 0 2rem;
+      max-width: 550px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2.5rem;
+    }
+    .stat-item {
+      cursor: default;
+      transition: transform 0.2s;
+    }
+    .stat-item:hover {
+      transform: translateY(-5px);
+    }
+    .stat-item h3 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-item p {
+      font-size: 0.95rem;
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .hero-visual {
+      flex: 1 1 380px;
+      position: relative;
+      min-height: 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .floating-orbit {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-light) 0%, transparent 70%);
+      box-shadow: 0 0 40px var(--accent-light);
+      animation: float 6s infinite alternate ease-in-out;
+      position: relative;
+    }
+    .floating-orbit::before {
+      content: '';
+      position: absolute;
+      inset: 20px;
+      border-radius: 50%;
+      border: 2px dashed var(--accent);
+      opacity: 0.3;
+      animation: spin 30s linear infinite;
+    }
+    .floating-orbit::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: conic-gradient(from 90deg at 50% 50%, var(--accent) 0deg, #7aa5f0 180deg, var(--accent) 360deg);
+      border-radius: 50%;
+      filter: blur(18px);
+      opacity: 0.5;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-20px) scale(1.02); }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* section general */
+    section {
+      padding: 5rem 0;
+      position: relative;
+      z-index: 10;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--heading-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-sub {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3.5rem auto;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+
+    /* service cards */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 32px;
+      padding: 2.2rem 1.8rem;
+      box-shadow: 0 20px 35px -12px var(--shadow-color);
+      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease;
+      border-radius: 4px 0 0 4px;
+    }
+    .service-card:hover {
+      transform: translateY(-10px) scale(1.01);
+      box-shadow: 0 30px 45px -12px var(--accent);
+      border-color: var(--accent);
+      background: var(--bg-card-hover);
+    }
+    .service-card:hover::before {
+      height: 100%;
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      background: var(--accent-light);
+      width: 70px;
+      height: 70px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+      color: var(--accent);
+      box-shadow: 0 10px 15px -8px var(--accent);
+      transition: 0.2s;
+    }
+    .service-card:hover .card-icon {
+      transform: scale(1.05);
+      color: var(--accent);
+    }
+
+    .service-card h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+    .service-card p {
+      color: var(--text-secondary);
+    }
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.7rem;
+      margin: 1rem 0 0.5rem;
+    }
+    .tag {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.3rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      border: 1px solid var(--border-light);
+      backdrop-filter: blur(4px);
+      transition: 0.15s;
+      cursor: default;
+    }
+    .tag:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      transform: scale(1.02);
+    }
+
+    /* category blocks */
+    .category-blocks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 3.5rem;
+    }
+    .cat-item {
+      background: var(--cat-item-bg);
+      backdrop-filter: blur(6px);
+      color: white;
+      border-radius: 60px;
+      padding: 0.9rem 2.5rem;
+      font-weight: 500;
+      box-shadow: 0 12px 20px -10px var(--shadow-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: 0.2s;
+    }
+    .cat-item:hover {
+      transform: translateY(-4px);
+      background: var(--accent);
+    }
+    .cat-item i {
+      color: white;
+    }
+
+    /* security showcase */
+    .security-showcase {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: center;
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 3rem;
+      box-shadow: 0 20px 40px -12px var(--shadow-color);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .security-left {
+      flex: 1 1 300px;
+    }
+    .security-left h2 {
+      color: var(--text-primary);
+    }
+    .security-right {
+      flex: 1 1 300px;
+      background: var(--bg-primary);
+      border-radius: 40px;
+      padding: 2.5rem;
+      border: 1px solid var(--border-light);
+    }
+    .counter-badge {
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    /* cta section */
+    .cta-section {
+      background: linear-gradient(125deg, #0b1f3b, #1e3e6b);
+      color: white;
+      border-radius: 70px 70px 30px 30px;
+      padding: 4rem 3rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .cta-section {
+      background: linear-gradient(125deg, #0d1f3a, #1b3a63);
+    }
+    .cta-section::before {
+      content: "24/7";
+      position: absolute;
+      bottom: -20px;
+      right: 20px;
+      font-size: 8rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+    .cta-flex {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+    }
+    .cta-flex h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      max-width: 500px;
+    }
+    .cta-btn {
+      background: white;
+      color: #13294b;
+      padding: 1.1rem 3.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      border: 2px solid white;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 15px 25px -8px #020c1a;
+    }
+    .cta-btn:hover {
+      background: transparent;
+      color: white;
+      transform: scale(1.02);
+    }
+
+    /* footer */
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 4rem 2rem 2rem;
+      border-radius: 50px 50px 0 0;
+      margin-top: 3rem;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2.5rem;
+    }
+    .footer-col h4 {
+      color: white;
+    }
+    .footer-col p {
+      margin: 1rem 0;
+      color: var(--footer-text);
+      transition: 0.2s;
+    }
+    .footer-col p:hover {
+      transform: translateX(4px);
+      color: white;
+    }
+    .footer-col i {
+      margin-right: 0.5rem;
+      color: var(--accent);
+    }
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #1d3452;
+      padding-top: 2rem;
+      margin-top: 2.5rem;
+      color: var(--footer-text);
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.9rem; }
+      .hero-text h2 { font-size: 2.6rem; }
+      .section-title { font-size: 2rem; }
+    }
+  </style>
+  <!-- AOS css -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="particles-bg"></div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <h1>RR IT</h1><span>Pvt. Ltd.</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#security">Security</a>
+        <a href="#contact" class="btn-outline">Connect</a>
+      </div>
+      <!-- Dark mode toggle -->
+      <div class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-text" data-aos="fade-right" data-aos-duration="800">
+        <span class="badge"><i class="fas fa-shield-alt" style="margin-right: 6px;"></i> 24/7 SOC • VAPT • since 2019</span>
+        <h2>Beyond infrastructure.<br>Intelligent security.</h2>
+        <p>From shared hosting to fully managed SOC — we design, protect, and recover your digital assets.</p>
+        <div class="stats">
+          <div class="stat-item" data-aos="zoom-in" data-aos-delay="100"><h3>200+</h3><p>servers</p></div>
+          <div class="stat-item" data-aos="zoom-in" data-aos-delay="200"><h3>1.2K+</h3><p>projects</p></div>
+          <div class="stat-item" data-aos="zoom-in" data-aos-delay="300"><h3>24/7</h3><p>security</p></div>
+        </div>
+      </div>
+      <div class="hero-visual" data-aos="fade-left" data-aos-duration="900">
+        <div class="floating-orbit"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES section -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">precision‑crafted services</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Everything from code to cloud, hardened by experts.</p>
+      
+      <div class="service-grid">
+        <!-- Website Dev & hosting -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="50">
+          <div class="card-icon"><i class="fas fa-code"></i></div>
+          <h3>Website Dev & Hosting</h3>
+          <p>Responsive sites + shared/reseller hosting with 99.9% uptime.</p>
+          <div class="service-tags"><span class="tag">Shared</span><span class="tag">Reseller</span><span class="tag">cPanel</span></div>
+        </div>
+        <!-- Cloud (VPS, dedicated) -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="100">
+          <div class="card-icon"><i class="fas fa-cloud"></i></div>
+          <h3>Cloud & VPS</h3>
+          <p>VPS servers, dedicated bare‑metal, scalable cloud infrastructure.</p>
+          <div class="service-tags"><span class="tag">VPS</span><span class="tag">Dedicated</span><span class="tag">KVM</span></div>
+        </div>
+        <!-- Database hosting -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="150">
+          <div class="card-icon"><i class="fas fa-database"></i></div>
+          <h3>Database Hosting</h3>
+          <p>MySQL, PostgreSQL, NoSQL — managed, secured & auto‑backed up.</p>
+          <div class="service-tags"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Redis</span></div>
+        </div>
+        <!-- Mobile apps -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="200">
+          <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>Mobile App Dev</h3>
+          <p>Native Android, IOS & cross‑platform with stunning UI/UX.</p>
+          <div class="service-tags"><span class="tag">Android</span><span class="tag">iOS</span><span class="tag">Flutter</span></div>
+        </div>
+        <!-- Desktop apps -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="250">
+          <div class="card-icon"><i class="fas fa-desktop"></i></div>
+          <h3>Desktop Apps</h3>
+          <p>Native Windows, MAC, Linux — powerful, secure, integrated.</p>
+          <div class="service-tags"><span class="tag">.NET</span><span class="tag">Qt</span><span class="tag">Electron</span></div>
+        </div>
+        <!-- Business Email -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="300">
+          <div class="card-icon"><i class="fas fa-envelope-open-text"></i></div>
+          <h3>Business Email</h3>
+          <p>Microsoft 365, Google Workspace, SmarterMail & MailEnable.</p>
+          <div class="service-tags"><span class="tag">M365</span><span class="tag">GWS</span><span class="tag">SmarterMail</span></div>
+        </div>
+        <!-- Control panels -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="350">
+          <div class="card-icon"><i class="fas fa-sliders-h"></i></div>
+          <h3>Control Panels</h3>
+          <p>Plesk, cPanel, DirectAdmin — licensing & system administration.</p>
+          <div class="service-tags"><span class="tag">Plesk</span><span class="tag">cPanel</span><span class="tag">DirectAdmin</span></div>
+        </div>
+        <!-- Windows Server Admin -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="400">
+          <div class="card-icon"><i class="fab fa-windows"></i></div>
+          <h3>Windows Server Admin</h3>
+          <p>Active Directory, Group Policy, IIS, failover clustering & more.</p>
+          <div class="service-tags"><span class="tag">AD</span><span class="tag">Hyper-V</span><span class="tag">Exchange</span></div>
+        </div>
+        <!-- Endpoint security -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="450">
+          <div class="card-icon"><i class="fas fa-shield-virus"></i></div>
+          <h3>Endpoint Security</h3>
+          <p>CrowdStrike, Sophos Intercept X Advanced — NGAV & EDR.</p>
+          <div class="service-tags"><span class="tag">CrowdStrike</span><span class="tag">Sophos</span><span class="tag">EDR</span></div>
+        </div>
+        <!-- Firewall Services -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="500">
+          <div class="card-icon"><i class="fas fa-firewall"></i></div>
+          <h3>Firewall & UTM</h3>
+          <p>Sophos, FortiGate, pfSense — deployment & rules optimisation.</p>
+          <div class="service-tags"><span class="tag">Sophos</span><span class="tag">FortiGate</span><span class="tag">UTM</span></div>
+        </div>
+        <!-- Vulnerability Assessment & Pentest -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="550">
+          <div class="card-icon"><i class="fas fa-bug"></i></div>
+          <h3>VAPT</h3>
+          <p>Web, network & mobile app penetration testing + detailed reports.</p>
+          <div class="service-tags"><span class="tag">Web App</span><span class="tag">Network</span><span class="tag">Mobile</span></div>
+        </div>
+        <!-- Data Recovery -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="600">
+          <div class="card-icon"><i class="fas fa-hdd"></i></div>
+          <h3>Data Recovery</h3>
+          <p>HDD, SSD, smartphone, laptop, portable storage — 24/7 emergency.</p>
+          <div class="service-tags"><span class="tag">HDD/SSD</span><span class="tag">RAID</span><span class="tag">forensics</span></div>
+        </div>
+        <!-- Backup & DR -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="650">
+          <div class="card-icon"><i class="fas fa-rotate"></i></div>
+          <h3>Backup & DR</h3>
+          <p>3-2-1 strategy, disaster recovery planning & implementation.</p>
+          <div class="service-tags"><span class="tag">Veeam</span><span class="tag">BC/DR</span></div>
+        </div>
+        <!-- Fully Managed SOC -->
+        <div class="service-card" data-aos="flip-left" data-aos-delay="700">
+          <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
+          <h3>Fully Managed SOC</h3>
+          <p>24/7 threat monitoring, SIEM, SOAR, incident response.</p>
+          <div class="service-tags"><span class="tag">SIEM</span><span class="tag">Threat hunt</span><span class="tag">24/7</span></div>
+        </div>
+      </div>
+
+      <!-- extra highlight blocks -->
+      <div class="category-blocks">
+        <span class="cat-item"><i class="fas fa-tachometer-alt"></i> Plesk · cPanel · MailEnable</span>
+        <span class="cat-item"><i class="fas fa-shield"></i> CrowdStrike · Sophos · FortiGate</span>
+        <span class="cat-item"><i class="fas fa-cloud-upload-alt"></i> SmarterMail · M365 · GWS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security & VAPT highlight -->
+  <section id="security">
+    <div class="container">
+      <div class="security-showcase" data-aos="fade-up" data-aos-duration="900">
+        <div class="security-left">
+          <h2 style="font-size: 2.6rem; font-weight: 700;">🔒 proactive defence,<br>continuous protection</h2>
+          <p style="margin: 1.5rem 0 1rem; font-size: 1.2rem;">We don't just respond — we anticipate. Our VAPT experts assess web, network, and mobile apps. Our SOC team works 24/7 with CrowdStrike and Sophos.</p>
+          <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+            <div><span class="counter-badge">150+</span><p>security audits</p></div>
+            <div><span class="counter-badge">24/7</span><p>SOC coverage</p></div>
+          </div>
+        </div>
+        <div class="security-right">
+          <i class="fas fa-shield-halved" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h3 style="margin-bottom: 1rem;">VAPT + SOC bundle</h3>
+          <ul style="list-style: none;">
+            <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 0.8rem;"></i> Web & network pentest</li>
+            <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 0.8rem;"></i> Mobile app assessment</li>
+            <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 0.8rem;"></i> Firewall (FortiGate/Sophos)</li>
+            <li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 0.8rem;"></i> Fully managed SOC</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- call to action -->
+  <div class="container" id="contact">
+    <div class="cta-section" data-aos="zoom-in-up">
+      <div class="cta-flex">
+        <h2><i class="fas fa-life-ring" style="margin-right: 12px;"></i> Emergency data recovery & DR consulting</h2>
+        <a href="#" class="cta-btn">Talk to engineer <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <p style="margin-top: 2rem; color: #b4d0ff; max-width: 700px;">Hard disk, SSD, smartphone, laptop, portable storage — we recover what matters. 24/7 hotline.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid container">
+    <div class="footer-col">
+      <h4>RR IT Pvt. Ltd.</h4>
+      <p><i class="fas fa-map-marker-alt"></i> Guwahati · Assam · Remote</p>
+      <p><i class="fas fa-phone-alt"></i> +91 12345 54321</p>
+      <p><i class="fas fa-envelope"></i> info at info</p>
+    </div>
+    <div class="footer-col">
+      <h4>core offerings</h4>
+      <p>Website & hosting</p>
+      <p>Cloud (VPS, dedicated)</p>
+      <p>Mobile & desktop apps</p>
+      <p>M365 / Google workspace</p>
+    </div>
+    <div class="footer-col">
+      <h4>security</h4>
+      <p>Endpoint · CrowdStrike</p>
+      <p>Firewall · FortiGate/Sophos</p>
+      <p>VAPT · SOC · backup</p>
+      <p>Data recovery</p>
+    </div>
+    <div class="footer-col">
+      <h4>control panels & admin</h4>
+      <p>Plesk · cPanel · MailEnable</p>
+      <p>SmarterMail · Windows Server</p>
+    </div>
+  </div>
+  <div class="copyright">
+    © 2025 RR IT Pvt. Ltd. — all systems operational <i class="fas fa-circle" style="color:#18e718; font-size: 0.6rem;"></i>
+  </div>
+</footer>
+
+<!-- AOS and dark mode script -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    once: false,
+    mirror: true,
+    duration: 700,
+    easing: 'ease-out-cubic'
+  });
+
+  // Dark mode toggle function
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const icon = document.getElementById('theme-icon');
+    
+    if (currentTheme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+      icon.className = 'fas fa-moon';
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      icon.className = 'fas fa-sun';
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  // Load saved theme on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    const icon = document.getElementById('theme-icon');
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      icon.className = 'fas fa-sun';
+    } else {
+      icon.className = 'fas fa-moon';
+    }
+  });
+
+  // micro interaction: tag click (demo)
+  const tags = document.querySelectorAll('.tag');
+  tags.forEach(tag => {
+    tag.addEventListener('click', function(e) {
+      e.stopPropagation();
+      alert(`🔹 ${this.innerText} — our specialists are ready.`);
+    });
+  });
+</script>
+</body>
+</html>
